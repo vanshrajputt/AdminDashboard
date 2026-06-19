@@ -1,10 +1,11 @@
 import React from 'react'
 import AdminSidebar from '../../components/Admin/AdminSidebar'
 
+
 export default function AdminHomePage() {
     return (
         <>
-            <div className="container my-3">
+            <div className="container my-3 mt-5">
                 <div className="row">
 
                     <div className="col-md-3">

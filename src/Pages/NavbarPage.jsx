@@ -1,7 +1,10 @@
 import React from 'react'
-import { Link, NavLink } from 'react-router-dom'
+
+import {Link, NavLink } from 'react-router-dom'
+
 
 export default function NavbarPage() {
+  
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow">
             <div className="container-fluid">
@@ -62,14 +65,14 @@ export default function NavbarPage() {
                         </li>
 
                         <li className="nav-item">
-                            <Link className="nav-link" to="/admin/orders">
-                                Orders
+                            <Link className="nav-link" to="/admin/shop">
+                                Shop
                             </Link>
                         </li>
 
                         <li className="nav-item">
                             <Link className="nav-link" to="/admin">
-                               Admin
+                                Admin
                             </Link>
                         </li>
 
@@ -80,19 +83,7 @@ export default function NavbarPage() {
                         </li>
                     </ul>
 
-                    <form className="d-flex">
-                        <input
-                            className="form-control me-2"
-                            type="search"
-                            placeholder="Search Product"
-                        />
-                        <button
-                            className="btn btn-outline-light"
-                            type="submit"
-                        >
-                            Search
-                        </button>
-                    </form>
+                    
                 </div>
             </div>
         </nav>

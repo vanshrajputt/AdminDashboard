@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import AdminSidebar from '../../../components/Admin/AdminSidebar'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import TextValidators from '../../../FormValidators/TextValidators'
 import PicValidators from '../../../FormValidators/PicValidators'
 import { ImTree } from 'react-icons/im'
+import { getMaincategory, updateMaincategory } from '../../../Redux/ActionCreators/MaincategoryActionCreators'
+
 
 export default function AdminUpdateMaincategoryPage() {
     let { id } = useParams()
@@ -19,8 +22,8 @@ export default function AdminUpdateMaincategoryPage() {
     })
 
     let [show, setShow] = useState(false)
-    let [MaincategoryStateData, setMaincategoryStateData] = useState([])
-
+    let MaincategoryStateData = useSelector(state => state.MaincategoryStateData)
+    let dispatch = useDispatch()
 
     let navigate = useNavigate() //ek page swe dusre page pr jane ke liye
 
@@ -51,49 +54,27 @@ export default function AdminUpdateMaincategoryPage() {
                 })
                 return
             }
+            dispatch(updateMaincategory({ ...data }))
 
-            let response = await fetch(`${import.meta.env.VITE_APP_BACKEND_SERVER}/maincategory/${id}`, {
-                method: "PUT",
-                headers: {
-                    "content-type": "application/json"
-                },
-                // javascript ko json me convert krne ke liye stringify , json ko javascript me parsh
-                body: JSON.stringify({ ...data })
-            })
-            response = await response.json()
-
-            if (response)
                 navigate("/admin/maincategory")
 
-            else
-
-                alert("glt h bhai")
         }
 
 
     }
     useEffect(() => {
-        (async () => {
-            let response = await fetch(`${import.meta.env.VITE_APP_BACKEND_SERVER}/maincategory`, {
-                method: "GET",
-                headers: {
-                    "content-type": "application/json"
-                }
-            })
-            response = await response.json()
-
-            let item = response.find(x => x.id === id)
-            if (item) {
-                setData({ ...data, ...item })
-                setMaincategoryStateData(response)
-
+        (() => {
+            dispatch(getMaincategory())
+            if(MaincategoryStateData.length){
+                let item = MaincategoryStateData.find(x=>x.id==id)
+                if(item)
+                    setData({...data,...item})
+                else
+                    navigate("/admin/maincategory")
             }
-            else
-                navigate("/admin/maincategory")
-
         })()
 
-    }, [])
+    }, [MaincategoryStateData.length])
     return (
         <>
             <div className="container my-3">

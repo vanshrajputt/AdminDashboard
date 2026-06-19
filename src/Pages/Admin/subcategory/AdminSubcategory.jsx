@@ -1,30 +1,30 @@
 import React, { useEffect, useState } from 'react'
 // import AdminSidebar from '../../../components/Admin/AdminSidebar'
 import { Link } from 'react-router-dom'
-import { deleteMaincategory, getMaincategory } from "../../../Redux/ActionCreators/MaincategoryActionCreators"
+import { deleteSubcategory, getSubcategory } from "../../../Redux/ActionCreators/SubcategoryActionCreators"
 import { useDispatch, useSelector } from 'react-redux'
 
 
-export default function AdminMaincategoryPage() {
+export default function AdminSubcategoryPage() {
     let [data, setData] = useState([])
-    let MaincategoryStateData = useSelector(state => state.MaincategoryStateData)
+    let SubcategoryStateData = useSelector(state => state.SubcategoryStateData)
     let dispatch = useDispatch()
 
     function deleteRecord(id) {
         if (window.confirm("Are You Sure To Delete This Record:")) {
-            dispatch(deleteMaincategory({id:id}))
+            dispatch(deleteSubcategory({id:id}))
             setData(data.filter(x=>x.id!==id))
         }
     }
     useEffect(() => {
         (async () => {
-            dispatch(getMaincategory())
-            if (MaincategoryStateData.length) {
-                setData(MaincategoryStateData)
+            dispatch(getSubcategory())
+            if (SubcategoryStateData.length) {
+                setData(SubcategoryStateData)
             }
         })()
 
-    }, [MaincategoryStateData.length])
+    }, [SubcategoryStateData.length])
     return (
         <>
             <div className="container my-3 ">
@@ -33,11 +33,11 @@ export default function AdminMaincategoryPage() {
 
 
                     <div className=" col-12">
-                        <h5 className='bg-primary text-center p-2 text-light mt-5'>Maincategory <Link to="/admin/maincategory/create"><i className='bi bi-plus text-light float-end'></i></Link></h5>
+                        <h5 className='bg-primary text-center p-2 text-light mt-5'>Subcategory <Link to="/admin/subcategory/create"><i className='bi bi-plus text-light float-end'></i></Link></h5>
                         <div className="row mt-5">
                             {data.map((item) => (
                                 <div className="col-md-2 mb-3" key={item.id}>
-                                    <div className="card h-100">
+                                    <div className="card h-60">
                                         <Link
                                             to={`${import.meta.env.VITE_APP_IMAGE_SERVER}${item.pic}`}
                                             target="_blank"
@@ -51,13 +51,13 @@ export default function AdminMaincategoryPage() {
                                         </Link>
 
                                         <div className="card-body">
-                                            <h5 className="card-title" style={{ height: 20}}>{item.name}</h5>
+                                            <h5 className="card-title" style={{ height: 15 }}>{item.name}</h5>
                                         </div>
                                         <ul className="list-group list-group-flush">
                                             <li className="list-group-item">  Id : {item.id}</li>
                                             <li className="list-group-item">  Status : {item.status ? "Active" : "Inactive"}</li>
                                             <li className="list-group-item d-flex justify-content-between">
-                                                <span> <Link to={`/admin/maincategory/update/${item.id}`} className='btn btn-primary'>
+                                                <span> <Link to={`/admin/subcategory/update/${item.id}`} className='btn btn-primary'>
                                                     <i className='bi bi-pencil'></i>
                                                 </Link></span>
                                                 <span><button className='btn btn-danger' onClick={() => deleteRecord(item.id)}><i className='bi bi-trash'></i></button></span>
